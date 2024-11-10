@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Form</title>
+  <style>
+    body {
+      background-image: url("https://s3.ap-south-1.amazonaws.com/gotouniv/cover_photo/1641/cover_photo_1500X500.jpg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      text-align: left;
+      color: #555;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: calc(100% - 22px);
+      padding: 12px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #4CAF50;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 26px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    img.logo {
+      margin-bottom: 30px;
+      width: 150px;
+      height: auto;
+    }
+
+    .error-message {
+      color: #d63031;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .success-message {
+      color: #00b894;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="University_of_Jordan_Logo.png" alt="University of Jordan Logo" class="logo">
+    <h1>Create an Account</h1>
+    <form id="signupForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      <label for="repeat_password">Repeat Password:</label>
+      <input type="password" id="repeat_password" name="repeat_password" placeholder="Repeat your password" required>
+      <label>Lectures:</label>
+      <input type="checkbox" id="algorithm" name="lectures" value="algorithm">
+      <label for="algorithm">Algorithm</label><br>
+      <input type="checkbox" id="data_structure" name="lectures" value="data_structure">
+      <label for="data_structure">Data Structure</label><br>
+      <button type="button" onclick="signup()">Signup</button>
+    </form>
+    <div id="error" class="error-message"></div>
+    <div id="success" class="success-message"></div>
+  </div>
+
+  <script>
+    function signup() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var repeatPassword = document.getElementById('repeat_password').value;
+      var lectures = [];
+      if (document.getElementById('algorithm').checked) {
+        lectures.push('algorithm');
+      }
+      if (document.getElementById('data_structure').checked) {
+        lectures.push('data_structure');
+      }
+
+      if (password !== repeatPassword) {
+        displayError('Passwords do not match.');
+        return;
+      }
+
+      if (!/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
+        displayError('Password must contain both uppercase and lowercase letters.');
+        return;
+      }
+
+      var lectureMapping = {
+        'algorithm': 123,
+        'data_structure': 321
+      };
+
+      var mappedLectures = lectures.map(lecture => lectureMapping[lecture]);
+
+      var formData = JSON.stringify({
+        'username': username,
+        'password': password,
+        'lectures': mappedLectures
+      });
+
+      fetch('http://127.0.0.1:5000/add_instructor', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: formData
+      })
+      .then(response => response.json())
+      .then(res_data => {
+        if (res_data.success) {
+          displaySuccess('Signup successful! Redirecting to login page...');
+          setTimeout(function(){
+            window.location.href = 'teacher_login.html';
+          }, 2000); // Redirect after 2 seconds
+        } else {
+          if (res_data.message === "Instructor already exists.") {
+            displayError(res_data.message);
+          } else {
+            displayError('Signup failed. Please try again later.');
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        displayError('Request failed. Network error.');
+      });
+    }
+
+    function displayError(message) {
+      var errorDiv = document.getElementById('error');
+      errorDiv.textContent = message;
+    }
+
+    function displaySuccess(message) {
+      var successDiv = document.getElementById('success');
+      successDiv.textContent = message;
+    }
+</script>
+</body>
+</html>

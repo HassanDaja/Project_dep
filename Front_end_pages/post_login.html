@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+      /* A light gray background */
+      background: linear-gradient(-40deg, #083803, rgb(29, 57, 2), #163502, #42c242);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+
+
+    }
+
+    @keyframes gradientBG {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .container {
+      background-color: rgba(58, 76, 88, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 40px;
+      box-shadow: 0 15px 18px rgba(200, 250, 250, 0.895);
+      width: 800px;
+      /* Adjust width as needed */
+      max-width: 100%;
+      box-sizing: border-box;
+      animation: fadeIn 0.1s ease-in-out forwards;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      /* Ensure it doesn't overflow on small screens */
+      width: 800px;
+      /* Adjust as needed */
+      padding: 40px;
+      border-radius: 20px;
+      /* Adjust for rounded corners */
+      background-color: #FFF;
+
+      /* white background */
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: white;
+      /* Adjust if you have a specific color in mind */
+      border-radius: 20px;
+      /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow for depth */
+      margin: 20px;
+      transform: rotate(-5deg);
+      /* Tilt effect */
+    }
+
+
+
+
+
+    img.logo {
+      /* Adjust the width and height to fit your needs */
+      width: 280px;
+      /* Example size, adjust as necessary */
+      height: auto;
+      /* This will maintain the aspect ratio */
+    }
+
+
+    .logo-container:hover {
+      transform: rotate(0);
+      /* Straighten on hover */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      /* More pronounced shadow on hover */
+    }
+
+
+    .dashboard-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+      flex: 1;
+    }
+
+    .form-content {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+    }
+
+    h1,
+    h2,
+    form,
+    .button-container {
+      text-align: left;
+      /* Aligns text to the left */
+      width: 100%;
+      /* Ensures the elements take up the full width available */
+    }
+
+
+
+    select,
+    input[type="submit"] {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background-color 0.3s, box-shadow 0.2s;
+    }
+
+    .red-button {
+      background-color: #e53935;
+    }
+
+    .red-button:hover {
+      box-shadow: 0 8px 16px rgba(229, 57, 53, 0.4);
+    }
+
+    .green-button {
+      background-color: #4caf50;
+    }
+
+    .green-button:hover {
+      box-shadow: 0 8px 16px rgba(76, 175, 80, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .logo {
+        margin-right: 0;
+        max-width: 50%;
+      }
+    }
+
+    body {
+      background: linear-gradient(270deg, #045003e1, #084001);
+      background-size: 400% 400%;
+    }
+
+    body {
+      background-image: url('image1.png'), url('image2.png');
+      background-position: top left, bottom right;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo ">
+      <img src="logo_uni_prev_ui.png" alt="University of Jordan Logo" class="logo">
+    </div>
+    <div class="dashboard-content">
+      <h1>Welcome, <span id="usernamePlaceholder"></span></h1>
+      <h2>Email: <span id="emailPlaceholder"></span></h2>
+      <h2>Major: <span id="majorPlaceholder"></span></h2>
+      <h2>Add Lecture</h2>
+      <form id="lec_form" method="post">
+        <select name="Lecture_name" id="lectureName">
+          <option value="algorithm">Algorithm</option>
+          <option value="Data structure">Data Structure</option>
+        </select>
+        <input type="submit" value="Add Lecture" onclick="add_student_to_lec(); return false;">
+      </form>
+      <div class="button-container">
+        <button id="button1" class="red-button">Logout</button>
+        <button id="button2" class="green-button">Student Attendance</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Retrieve session data from sessionStorage
+    var username = sessionStorage.getItem('username');
+    var email = sessionStorage.getItem('email');
+    var major = sessionStorage.getItem('major');
+    var id = sessionStorage.getItem('id');
+    // Update HTML content with session data
+    document.getElementById('usernamePlaceholder').innerText = username;
+    document.getElementById('emailPlaceholder').innerText = email;
+    document.getElementById('majorPlaceholder').innerText = major;
+    function handleButtonClick() {
+      window.location.href = 'student_attendance.html';
+
+    }
+    function add_student_to_lec() {
+      var lectureName = document.getElementById('lectureName').value;
+      var studentId = sessionStorage.getItem('id');
+      var formData = new FormData();
+      formData.append('lecture_Name', lectureName);
+      formData.append('student_id', studentId);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://127.0.0.1:5000/add_student_to_lec');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            console.log(data.status);
+            if (data.status == true) {
+              alert(data.message);
+            } else {
+              alert("Error: " + data.message);
+            }
+          } else {
+            console.error('Error:', xhr.statusText);
+            alert('Request failed. Network error.');
+          }
+        }
+      };
+      xhr.onerror = function () {
+        console.error('Error: Network request failed');
+        alert('Request failed. Network error.');
+      };
+      xhr.send(formData);
+    }
+
+    // Function to handle logout
+    function handleLogout() {
+      sessionStorage.setItem('is_logged_in', 'false');
+      window.location.href = "Login.html";
+    }
+
+    // Add event listeners to buttons
+    var button1 = document.getElementById('button1');
+    var button2 = document.getElementById('button2');
+
+    button1.addEventListener('click', handleLogout);
+    button2.addEventListener('click', handleButtonClick);
+
+
+
+  </script>
+</body>
+
+</html>

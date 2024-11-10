@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Login Page</title>
+  <style>
+    body {
+      background-image: url("https://registration.ju.edu.jo/en/english/PublishingImages/B_JPG.jpg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 500px;
+      text-align: center;
+      animation: slideInAnimation 1s ease-out;
+    }
+
+    @keyframes slideInAnimation {
+      0% { transform: translateY(-20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .sub_container {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    img.logo {
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      width: 150px;
+      height: auto;
+    }
+
+    .red-button {
+      background-color: #FF5733;
+    }
+
+    .green-button {
+      background-color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo_uni_prev_ui.png" alt="University of Jordan Logo" class="logo">
+    <h1>Welcome, <span id="usernamePlaceholder"></span></h1>
+    <div id="subContainers"></div> <!-- Added container for sub-containers -->
+    <div class="button-container">
+      <button id="button1" class="red-button">Logout</button>
+    </div>
+  </div>
+<script>
+  var lec_details = JSON.parse(sessionStorage.getItem('lec_details')); // Parse the session data into array
+  var container = document.getElementById('subContainers');
+
+  // Loop through lecture details
+  for (var i = 0; i < lec_details.length; i++) {
+    var subContainer = document.createElement('div');
+    subContainer.className = 'sub_container';
+    subContainer.innerHTML = '<h2>Lecture Name: ' + lec_details[i].lecture_name + '</h2>' + "<h2>Lecture No:" + lec_details[i].lecture_id + "</h2>";
+
+    // Create button element
+    var button = document.createElement('button');
+    button.textContent = 'Take Attendance'; // Button text
+
+    // Add event listener to button
+    button.addEventListener('click', (function(lectureId) {
+      return function() {
+        // Create a FormData object to send with the request
+        var formData = new FormData();
+        formData.append('lec_id', lectureId);
+
+        // Send a POST request using fetch
+        fetch('http://127.0.0.1:5000/take_attendance', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => {
+          if (response.ok) {
+            alert("Attendance has been taken successfully.");
+            return response.blob(); // Get the blob data
+          } else {
+            alert("Something went wrong while taking attendance.");
+            throw new Error('Network response was not ok');
+          }
+        })
+        .then(blob => {
+          // Create a temporary URL for the blob
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = 'attendance_report.csv';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url); // Clean up
+          document.body.removeChild(a); // Clean up after ourselves
+        })
+        .catch(error => {
+          console.error('Error downloading CSV:', error);
+          alert('Failed to download attendance report. Please try again.');
+        });
+      };
+    })(lec_details[i].lecture_id));
+
+    // Append button to sub-container
+    subContainer.appendChild(button);
+
+    // Append sub-container to main container
+    container.appendChild(subContainer);
+  }
+
+  // Update HTML content with session data
+  document.getElementById('usernamePlaceholder').innerText = sessionStorage.getItem('username');
+
+  // Function to handle logout
+  function handleLogout() {
+    sessionStorage.setItem('is_logged_in', 'false');
+    window.location.href = "teacher_login.html";
+  }
+
+  // Add event listener to the logout button
+  document.getElementById('button1').addEventListener('click', handleLogout);
+</script>
+
+</body>
+</html>

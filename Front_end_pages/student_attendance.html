@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student_Attendance</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(-40deg, #083803, rgb(29, 57, 2), #163502, #42c242);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 18px rgba(200, 250, 250, 0.895);
+      max-width: 800px;
+      width: 100%;
+      box-sizing: border-box;
+      animation: fadeIn 0.1s ease-in-out forwards;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    img.logo {
+      width: 280px;
+      height: auto;
+    }
+
+    .dashboard-content,
+    .button-container,
+    form {
+      width: 100%;
+      text-align: left;
+    }
+
+    select,
+    input[type="submit"],
+    button {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background-color 0.3s, box-shadow 0.2s;
+      background-color: #4caf50;
+    }
+
+    .red-button {
+      background-color: #e53935;
+    }
+
+    .red-button:hover,
+    .green-button:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 90%;
+        flex-direction: column;
+      }
+    }
+
+    body {
+      background: linear-gradient(270deg, #045003e1, #084001);
+      background-size: 400% 400%;
+    }
+
+    body {
+      background-image: url('image1.png'), url('image2.png');
+      background-position: top left, bottom right;
+      background-repeat: no-repeat;
+    }
+
+    .form-field label {
+      align-items: flex-start;
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #101214;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="logo_uni_prev_ui.png" alt="University of Jordan Logo" class="logo">
+    <div id="subContainers"></div>
+    <button id="goBackButton">Go Back</button>
+  </div>
+
+  <script>
+    document.getElementById('goBackButton').addEventListener('click', function() {
+      window.location.href = 'post_login.html';
+    });
+
+    var studentId = sessionStorage.getItem('id');
+    document.addEventListener('DOMContentLoaded', function () {
+      var container = document.getElementById('subContainers');
+
+      fetch(`http://127.0.0.1:5555/Database/get_students_lec/${studentId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(res_data => {
+          var numIds = res_data.Data.length;
+          for (var i = 0; i < numIds; i++) {
+            var subContainer = document.createElement('div');
+            subContainer.className = 'sub_container';
+            subContainer.innerHTML = '<h1>Lecture Name: ' + res_data.Data[i].lecture_name + '</h1>' + "<h2> lecture.No:" + res_data.Data[i].lecture_id + "<h2>" + "<h2> Number of absences:" + res_data.Data[i].lec_abs + "<h2>";
+            container.appendChild(subContainer);
+          }
+        })
+        .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    });
+  </script>
+</body>
+
+</html>

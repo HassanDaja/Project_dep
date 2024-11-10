@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+      /* A light gray background */
+      background: linear-gradient(-40deg, #083803, rgb(29, 57, 2), #163502, #42c242);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+
+
+    }
+
+    @keyframes gradientBG {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+
+    .container {
+      background-color: rgba(58, 76, 88, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 40px;
+      box-shadow: 0 15px 18px rgba(200, 250, 250, 0.895);
+      width: 800px;
+      /* Adjust width as needed */
+      max-width: 100%;
+      box-sizing: border-box;
+      animation: fadeIn 0.1s ease-in-out forwards;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      /* Ensure it doesn't overflow on small screens */
+      width: 800px;
+      /* Adjust as needed */
+      padding: 40px;
+      border-radius: 20px;
+      /* Adjust for rounded corners */
+      background-color: #FFF;
+
+      /* white background */
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: white;
+      /* Adjust if you have a specific color in mind */
+      border-radius: 20px;
+      /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow for depth */
+      margin: 20px;
+      transform: rotate(-5deg);
+      /* Tilt effect */
+    }
+
+    .logo-container:hover {
+      transform: rotate(0);
+      /* Straighten on hover */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      /* More pronounced shadow on hover */
+    }
+
+
+
+    /* Smaller logo size and alignment */
+    img.logo {
+      width: 210px;
+      /* Adjusted logo size */
+      margin-bottom: 180 px;
+      height: auto;
+      margin-left: 25px;
+
+
+    }
+
+    /* Step indicator adjustments for line position */
+
+
+
+    /* Form styling */
+    .form-content {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+    }
+
+
+
+    h1 {
+      text-align: center;
+
+    }
+
+    /* Input field adjustments */
+    .form-field input[type="file"],
+    .form-field select {
+      width: calc(100% - 200px);
+      padding: 6px;
+      border: 1px solid #03194b;
+      border-radius: 40px;
+      margin-bottom: 10px;
+      transition: transform 0.2s ease-in-out;
+
+    }
+
+    .form-field {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #090a0c;
+    }
+
+    .form-field label {
+      width: 150px;
+      /* Adjust the width as needed */
+      margin-right: 10px;
+      /* Space between label and input */
+
+      /* Align the text to the right */
+    }
+
+    .form-field input[type="file"],
+    .form-field select {
+      flex-grow: 1;
+      /* Take up the remaining space */
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus {
+      box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+      border: 1px solid rgba(81, 203, 238, 1);
+    }
+
+    .form-field input[type="text"]:focus,
+    .form-field input[type="password"]:focus {
+      border-color: #032904;
+      outline: none;
+    }
+
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+
+      transition: transform 0.2s ease-in-out;
+      top: 100px;
+    }
+
+
+
+    button {
+      cursor: pointer;
+      width: 100%;
+      background-image: linear-gradient(to right, #5a923e 0%, #076403 100%);
+      padding: 10px 20px;
+      border-radius: 40px;
+      background-color: #02333b;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: none;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, transform 0.2s ease-out;
+    }
+
+    button:hover {
+      background-color: #43a047;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+    }
+
+    body {
+      background: linear-gradient(270deg, #045003e1, #084001);
+      background-size: 400% 400%;
+    }
+
+    body {
+      background-image: url('image1.png'), url('image2.png');
+      background-position: top left, bottom right;
+      background-repeat: no-repeat;
+    }
+
+    .form-field label {
+      align-items: flex-start;
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #101214;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="logo_uni_prev_ui.png" alt="University of Jordan Logo" class="logo">
+    <div class="form-content">
+      <h1>Login</h1> <!-- Moved outside the form-content div for correct positioning -->
+      <form id="loginForm" onsubmit="login(event)">
+        <div class="form-field">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-field">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var isLoggedIn = sessionStorage.getItem('is_logged_in');
+      if (isLoggedIn == 'true') {
+        // Redirect the user to another page if already logged in
+        window.location.href = 'post_login.html';
+      }
+    });
+
+    function login(event) {
+      event.preventDefault(); // Prevent default form submission behavior
+
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+
+      // Create a FormData object to send with the request
+      var formData = new FormData();
+      formData.append('username', username);
+      formData.append('password', password);
+
+      // Send a POST request using fetch
+      fetch('http://127.0.0.1:5000/login', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json()) // Parse response as JSON
+        .then(res_data => {
+          if (res_data.status === true) {
+            // Display the returned data as an alert
+            sessionStorage.setItem('username', username);
+            sessionStorage.setItem('email', res_data.data.email);
+            sessionStorage.setItem('major', res_data.data.major);
+            sessionStorage.setItem('id', res_data.data.id);
+            sessionStorage.setItem('is_logged_in', 'true');
+            window.location.href = 'post_login.html'
+          } else {
+            alert("Error: " + res_data.data);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Request failed. Network error.');
+        });
+    }
+  </script>
+</body>
+
+</html>

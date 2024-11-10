@@ -1,0 +1,2 @@
+Detection_and_recognition/*.h5 filter=lfs diff=lfs merge=lfs -text
+Detection_and_recognition/*.pt filter=lfs diff=lfs merge=lfs -text

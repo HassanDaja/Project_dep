@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+      /* A light gray background */
+      background: linear-gradient(-40deg, #083803, rgb(29, 57, 2), #163502, #42c242);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+
+
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .container {
+      background-color: rgba(58, 76, 88, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 40px;
+      box-shadow: 0 15px 18px rgba(200, 250, 250, 0.895);
+      width: 800px;
+      /* Adjust width as needed */
+      max-width: 100%;
+      box-sizing: border-box;
+      animation: fadeIn 0.1s ease-in-out forwards;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      /* Ensure it doesn't overflow on small screens */
+      width: 800px;
+      /* Adjust as needed */
+      padding: 40px;
+      border-radius: 20px;
+      /* Adjust for rounded corners */
+      background-color: #FFF;
+      /* white background */
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: white;
+      /* Adjust if you have a specific color in mind */
+      border-radius: 20px;
+      /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow for depth */
+      margin: 20px;
+      transform: rotate(-5deg);
+      /* Tilt effect */
+    }
+
+    .logo-container:hover {
+      transform: rotate(0);
+      /* Straighten on hover */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      /* More pronounced shadow on hover */
+    }
+
+
+
+    /* Smaller logo size and alignment */
+    img.logo {
+      width: 250px;
+      /* Adjusted logo size */
+      margin-bottom: 180 px;
+      height: auto;
+      margin-left: 25px;
+    }
+
+    /* Step indicator adjustments for line position */
+
+    .step-indicator {
+      display: flex;
+      justify-content: space-around;
+      /* Space out the step indicators */
+      align-items: center;
+      width: 100%;
+      /* Full width */
+      position: relative;
+      /* Allows absolute positioning inside */
+      margin-bottom: 30px;
+      size-adjust: 100px;
+    }
+
+
+    /* Styling for step text and circle */
+    .step {
+      margin: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step-text {
+      font-size: 12px;
+      color: #333;
+    }
+
+    .step-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: calc(100% - 70px);
+      /* Subtract the width of both circles */
+      height: 2px;
+      background-color: #ccc;
+      transform: translateY(-50%);
+      z-index: -1;
+    }
+
+
+    /* Style for the circles */
+
+    .step-circle {
+      width: 35px;
+      /* Larger circle size */
+      height: 35px;
+      line-height: 25px;
+      border-radius: 70%;
+      background-color: #cccccc;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      /* RGB lighting effect */
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* Highlight the active step */
+
+    .active .step-circle {
+      background-color: #4CAF50;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+      /* RGB lighting effect */
+    }
+
+    .step-indicator::before {
+      /* Adjust the ::before element to create the connecting line */
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      width: 100%;
+      height: 2px;
+      background: #ccc;
+      transform: translateY(-50%);
+      z-index: -1;
+    }
+
+
+    /* Form styling */
+    .form-content {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+    }
+
+
+
+    h1 {
+      text-align: center;
+
+    }
+
+    /* Input field adjustments */
+    .form-field input[type="file"],
+    .form-field select {
+      width: calc(100% - 200px);
+      padding: 6px;
+      border: 1px solid #03194b;
+      border-radius: 40px;
+      margin-bottom: 10px;
+      transition: transform 0.2s ease-in-out;
+
+    }
+
+    .form-field {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .form-field label {
+      width: 150px;
+      /* Adjust the width as needed */
+      margin-right: 10px;
+      /* Space between label and input */
+
+      /* Align the text to the right */
+    }
+
+    .form-field input[type="file"],
+    .form-field select {
+      flex-grow: 1;
+      /* Take up the remaining space */
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus {
+      box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+      border: 1px solid rgba(81, 203, 238, 1);
+    }
+
+
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+
+      transition: transform 0.2s ease-in-out;
+      top: 100px;
+    }
+
+
+
+    button {
+      cursor: pointer;
+      width: 90%;
+      background-image: linear-gradient(to right, #5a923e 0%, #076403 100%);
+      padding: 10px 20px;
+      border-radius: 40px;
+      background-color: #02333b;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: none;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s, transform 0.2s ease-out;
+    }
+
+    button:hover {
+      background-color: #43a047;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+    }
+
+    body {
+      background: linear-gradient(270deg, #045003e1, #084001);
+      background-size: 400% 400%;
+    }
+
+    body {
+      background-image: url('image1.png'), url('image2.png');
+      background-position: top left, bottom right;
+      background-repeat: no-repeat;
+    }
+
+    .form-field label {
+      align-items: flex-start;
+      display: flex;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="logo_uni_prev_ui.png" alt="University of Jordan Logo" class="logo">
+    <div class="form-content">
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step active">
+          <div class="step-circle">1</div>
+          <div class="step-text">Register now</div>
+        </div>
+
+        <div class="step">
+          <div class="step-circle">2</div>
+          <div class="step-text">Upload Info</div>
+        </div>
+
+      </div>
+      <h1>Sign Up</h1>
+      <form id="signupForm">
+        <div class="form-field">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-field">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-field">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div class="form-field">
+          <label for="confirmPassword">Confirm Password:</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required>
+        </div>
+
+
+      </form>
+      <form id="signupForm" onsubmit="submitForm(event)">
+        <!-- form fields -->
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var isLoggedIn = sessionStorage.getItem('is_logged_in');
+        if (isLoggedIn == 'true') {
+          // Redirect the user to another page if already logged in
+          window.location.href = 'post_login.html';
+        }
+      });
+
+      function submitForm(event) {
+        event.preventDefault();
+
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (username === '' || email === '' || password === '' || confirmPassword === '') {
+          alert("Please fill in all fields");
+          return false;
+        }
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return false;
+        }
+
+        var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+          alert("Password must contain at least 8 characters including uppercase, lowercase letters, numbers, and special characters");
+          return false;
+        }
+
+        // If all validations pass
+        localStorage.setItem('username', username);
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+
+        // Redirect to 'Sec_part_signup.html'
+        window.location.href = 'Sec_part_signup.html';
+      }
+    </script>
+
+
+</body>
+
+</html>
